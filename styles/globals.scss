@@ -1,0 +1,23 @@
+@import "./variables.scss";
+
+* {
+
+	font-family: inter;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: $background-color;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+}
+
+
+@font-face {
+	font-family: inter;
+	src: url(../public/fonts/Inter/Inter-VariableFont_slnt,wght.ttf);
+}
+
+@font-face {
+	font-family: muli;
+	src: url(../public/fonts/muli/Muli.ttf);
+}

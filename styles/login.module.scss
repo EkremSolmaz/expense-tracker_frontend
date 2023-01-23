@@ -1,0 +1,61 @@
+@import "./variables.scss";
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.loginDialog {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background-color: #ffffff;
+		padding: 2rem;
+		border-radius: 12px;
+		max-width: 600px;
+
+		form {
+			padding: 20px;
+			border-radius: 10px;
+			font-weight: bold;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 40px;
+
+			label {
+				font-size: 1.2rem;
+				margin-bottom: 10px;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 16px;
+
+				input {
+					width: 100%;
+					padding: 10px;
+					border-radius: 8px;
+					font-size: 1rem;
+				}
+			}
+
+			button {
+				background: $button-color;
+				color: #ffffff;
+				padding: 10px 20px;
+				border-radius: 5px;
+				border: none;
+				font-size: 1rem;
+				font-weight: bold;
+				cursor: pointer;
+
+				&:hover {
+					background: $button-hover-color;
+				}
+			}
+		}
+	}
+}

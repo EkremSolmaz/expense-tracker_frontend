@@ -1,0 +1,12 @@
+@import "./variables.scss";
+@import "./alignments.scss";
+
+%base-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    @extend %align-items-vertical;
+    @extend %space-between;
+    overflow: hidden;
+}

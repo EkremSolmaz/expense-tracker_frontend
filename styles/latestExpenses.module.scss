@@ -1,0 +1,75 @@
+@import "./shared.scss";
+
+.container {
+    @extend %base-card;
+    @extend %vertical-list;
+    gap: 24px;
+
+    border: 1px solid red;
+
+    .title {
+        width: 100%;
+        font-weight: 900;
+        font-size: 20px;
+    }
+
+    .list {
+        width: 100%;
+        @extend %vertical-list;
+
+        gap: 15px;
+
+        .expense {
+            width: 100%;
+            height: 60px;
+            padding: 10px 0;
+            @extend %space-between;
+
+            .icon {
+                @extend %center-items;
+                background-color: #f5dcdc;
+                border-radius: 50%;
+                width: 42px;
+                height: 42px;
+            }
+
+            .detail {
+                @extend %space-between;
+                @extend %align-items-vertical;
+                width: calc(100% - 70px);
+
+                .info {
+                    @extend %vertical-list;
+
+                    * {
+                        font-family: muli;
+                    }
+
+                    .category {
+                        font-size: 18px;
+                        font-weight: 800;
+                    }
+
+                    .description {
+                        font-size: 14px;
+                        font-weight: 700;
+                        color: #a29ebc;
+                    }
+                }
+
+                .amount {
+                    font-size: 18px;
+                    font-weight: 800;
+                    color: #d14f4f;
+                }
+
+            }
+        }
+
+    }
+
+    .see_all {
+        width: 100%;
+        text-align: right;
+    }
+}
