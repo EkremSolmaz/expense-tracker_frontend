@@ -1,0 +1,19 @@
+@import "./shared.scss";
+
+.container {
+    height: 268px;
+    @extend %base-card;
+    @extend %vertical-list;
+    gap: 16px;
+
+    .title {
+        font-size: 20px;
+        font-weight: 900;
+        width: 100%;
+    }
+
+    .chart {
+        width: 100%;
+    }
+
+}

@@ -7,10 +7,14 @@ const iconMap: { [key: string]: string } = {
 	house: "/images/icons8-house-96.png",
 	food: "/images/icons8-hamburger-96.png",
 	travel: "/images/icons8-beach-96.png",
+	default: "/images/icons8-question-mark-96.png",
 };
 
 export default function LatestExpensesComponent({ expenses }: any) {
-	const latestExpenses = expenses.slice(-4);
+	const latestExpenses = expenses.slice(0, 4);
+	latestExpenses.map((expense: any) => {
+		expense.dateStr = new Date(expense.date).toLocaleDateString();
+	});
 	return (
 		<>
 			<div className={styles.container}>
@@ -31,10 +35,11 @@ export default function LatestExpensesComponent({ expenses }: any) {
 }
 
 function getExpenseTemplate(expense: any) {
+	const iconSrc = expense.category in iconMap ? iconMap[expense.category] : iconMap.default;
 	return (
 		<div className={styles.expense}>
 			<div className={styles.icon}>
-				<Image src={iconMap[expense.category]} alt="" width={40} height={40}></Image>
+				<Image src={iconSrc} alt="" width={40} height={40}></Image>
 			</div>
 			<div className={styles.detail}>
 				<div className={styles.info}>
@@ -43,7 +48,10 @@ function getExpenseTemplate(expense: any) {
 					</span>
 					<span className={styles.description}>{expense.description}</span>
 				</div>
-				<div className={styles.amount}>${expense.amount}</div>
+				<div className={styles.right}>
+					<span className={styles.amount}>${expense.amount}</span>
+					<span className={styles.date}>{expense.dateStr}</span>
+				</div>
 			</div>
 		</div>
 	);

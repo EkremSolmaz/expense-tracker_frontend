@@ -1,15 +1,23 @@
 import { ApiError } from "next/dist/server/api-utils";
 import LatestExpensesComponent from "./components/latestExpenses";
+import SpendingThisMonthComponent from "./components/spendingThisMonth";
 import TotalExpenseComponent from "./components/totalExpense";
+import styles from "../../styles/[userId].module.scss";
+import YearReportComponent from "./components/yearReport";
 
 export default function UserIdPage({ user, expenses }: any) {
 	const totalExpense = getTotalExpenseAmount(expenses);
 	return (
 		<>
-			<p>name</p>
-			<p>{user.name}</p>
-			<TotalExpenseComponent totalAmount={totalExpense} />
-			<LatestExpensesComponent expenses={expenses} />
+			<div className={styles.container}>
+				<span className={styles.title}>Dashboard</span>
+				<div className={styles.content}>
+					<TotalExpenseComponent totalAmount={totalExpense} />
+					<YearReportComponent expenses={expenses} />
+					<LatestExpensesComponent expenses={expenses} />
+					<SpendingThisMonthComponent expenses={expenses} />
+				</div>
+			</div>
 		</>
 	);
 }
@@ -43,7 +51,6 @@ export async function getStaticProps({ params }: any) {
 			const userData = await res.json();
 			user = userData.data;
 			expenses = await getExpensesOfUser(user._id);
-			console.log(expenses);
 		} else {
 			throw new ApiError(res.status, res.status + ": " + res.statusText);
 		}

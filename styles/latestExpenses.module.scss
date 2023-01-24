@@ -5,8 +5,6 @@
     @extend %vertical-list;
     gap: 24px;
 
-    border: 1px solid red;
-
     .title {
         width: 100%;
         font-weight: 900;
@@ -57,10 +55,22 @@
                     }
                 }
 
-                .amount {
-                    font-size: 18px;
-                    font-weight: 800;
-                    color: #d14f4f;
+                .right {
+                    @extend %vertical-list;
+                    align-items: flex-end;
+
+
+                    .date {
+                        font-size: 12px;
+                        font-weight: 800;
+                        opacity: 0.3;
+                    }
+
+                    .amount {
+                        font-size: 18px;
+                        font-weight: 800;
+                        color: #d14f4f;
+                    }
                 }
 
             }
@@ -70,6 +80,24 @@
 
     .see_all {
         width: 100%;
-        text-align: right;
+        text-align: center;
+
+        a {
+            text-decoration: none !important;
+            font-weight: 900;
+            font-family: inter;
+            color: $button-color;
+
+            &:visited {
+                text-decoration: none;
+                color: $button-color;
+
+            }
+
+            &:hover {
+                color: $button-hover-color;
+            }
+        }
+
     }
 }
