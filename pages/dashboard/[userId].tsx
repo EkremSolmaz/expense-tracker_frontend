@@ -2,11 +2,25 @@ import { ApiError } from "next/dist/server/api-utils";
 import LatestExpensesComponent from "./components/latestExpenses";
 import SpendingThisMonthComponent from "./components/spendingThisMonth";
 import TotalExpenseComponent from "./components/totalExpense";
-import styles from "../../styles/[userId].module.scss";
 import YearReportComponent from "./components/yearReport";
+import styles from "../../styles/[userId].module.scss";
+import AddExpenseModal from "../shared/addExpenseModal";
+import { useEffect, useRef, useState } from "react";
 
-export default function UserIdPage({ user, expenses }: any) {
-	const totalExpense = getTotalExpenseAmount(expenses);
+export default function UserIdPage({ user }: any) {
+	const [totalExpense, setTotalExpense] = useState(0);
+	const [expenses, setExpenses] = useState([]);
+
+	useEffect(() => {
+		refreshExpenses(user._id);
+		setTotalExpense(getTotalExpenseAmount(expenses));
+	}, []);
+
+	async function refreshExpenses(userId: string) {
+		const new_expenses = await getExpensesOfUser(userId);
+		setExpenses(new_expenses);
+	}
+
 	return (
 		<>
 			<div className={styles.container}>
@@ -17,6 +31,7 @@ export default function UserIdPage({ user, expenses }: any) {
 					<LatestExpensesComponent expenses={expenses} />
 					<SpendingThisMonthComponent expenses={expenses} />
 				</div>
+				<AddExpenseModal userId={user._id} refreshCallback={refreshExpenses} />
 			</div>
 		</>
 	);
@@ -44,13 +59,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
 	let user: any = {};
-	let expenses: any = {};
 	try {
 		const res = await fetch("http://localhost:3333/users/" + params.userId);
 		if (res.ok) {
 			const userData = await res.json();
 			user = userData.data;
-			expenses = await getExpensesOfUser(user._id);
 		} else {
 			throw new ApiError(res.status, res.status + ": " + res.statusText);
 		}
@@ -62,7 +75,6 @@ export async function getStaticProps({ params }: any) {
 	return {
 		props: {
 			user,
-			expenses,
 		},
 	};
 }

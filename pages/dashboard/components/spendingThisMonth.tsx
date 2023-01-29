@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../../../styles/spendingThisMonth.module.scss";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { capitalizeFirstLetter } from "../../helpers/methods";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -19,15 +20,9 @@ export default function SpendingThisMonthComponent({ expenses }: any) {
 	const amountWhole = parts[0];
 	const amountFloat = parts[1];
 
-	console.log(
-		Object.values(data).map((v) => {
-			return `$${v}`;
-		})
-	);
-
 	const chartData: any = {
 		labels: Object.keys(data).map((x) => {
-			return x[0].toUpperCase() + x.slice(1).toLowerCase();
+			return capitalizeFirstLetter(x);
 		}),
 		datasets: [
 			{
@@ -51,7 +46,6 @@ export default function SpendingThisMonthComponent({ expenses }: any) {
 				displayColors: false,
 				callbacks: {
 					label: function (x: any) {
-						console.log(x);
 						return `$${x.formattedValue}`;
 					},
 				},
@@ -60,7 +54,7 @@ export default function SpendingThisMonthComponent({ expenses }: any) {
 		layout: {
 			padding: 20,
 		},
-		cutout: 130,
+		cutout: 120,
 		hoverOffset: 40,
 	};
 

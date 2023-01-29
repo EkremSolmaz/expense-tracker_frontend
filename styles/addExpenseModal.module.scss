@@ -1,0 +1,23 @@
+@import "./shared.scss";
+
+.container {
+    .add_expense_button {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+
+        .button {
+            background-color: $secondary-color;
+            color: $primary-color;
+
+            width: 54px;
+            height: 54px;
+
+            &>svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+}

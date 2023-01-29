@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../../styles/latestExpenses.module.scss";
 import { capitalizeFirstLetter } from "../../helpers/methods";
@@ -11,7 +11,12 @@ const iconMap: { [key: string]: string } = {
 };
 
 export default function LatestExpensesComponent({ expenses }: any) {
-	const latestExpenses = expenses.slice(0, 4);
+	const [latestExpenses, setlatestExpenses] = useState(expenses.slice(0, 4));
+
+	useEffect(() => {
+		setlatestExpenses(expenses.slice(0, 4));
+	}, [expenses]);
+
 	latestExpenses.map((expense: any) => {
 		expense.dateStr = new Date(expense.date).toLocaleDateString();
 	});
