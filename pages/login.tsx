@@ -3,11 +3,13 @@ import TextField from "@mui/material/TextField";
 import Router from "next/router";
 import { useState } from "react";
 import styles from "../styles/login.module.scss";
+import ApiCall from "./helpers/api_call";
+import { User } from "./helpers/interfaces";
 
 async function getUser(username: string) {
-	const res = await fetch("http://localhost:3333/users");
-	const data = await res.json();
-	const user = data.data.find((user: any) => user.name === username);
+	const data = await ApiCall.getUsers();
+	console.log(data);
+	const user = data.find((user: User) => user.name === username);
 	return user;
 }
 
@@ -36,7 +38,13 @@ export default function LoginPage() {
 			<div className={styles.loginDialog}>
 				<h2>Login</h2>
 				<form onSubmit={handleSubmit}>
-					<TextField id="standard-basic" label="Username" variant="standard" value={username} onChange={(e) => setUsername(e.target.value)} />
+					<TextField
+						id="standard-basic"
+						label="Username"
+						variant="standard"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
+					/>
 					{loading ? <CircularProgress /> : <button type="submit">Login</button>}
 				</form>
 			</div>

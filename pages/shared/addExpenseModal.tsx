@@ -20,6 +20,8 @@ import Dialog from "@mui/material/Dialog";
 import Image from "next/image";
 
 import styles from "../../styles/addExpenseModal.module.scss";
+import { Expense } from "../helpers/interfaces";
+import ApiCall from "../helpers/api_call";
 
 const categories: { [key: string]: string } = {
 	house: "/images/icons8-house-96.png",
@@ -47,24 +49,15 @@ export default function AddExpenseModal({
 
 	const handleSubmit = async () => {
 		// handle form submission here
-		const requestOptions = {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				userId: userId,
-				category: selectedCategory,
-				amount: amount,
-				currency: "dollar",
-				description: description,
-			}),
+		const expense: Expense = {
+			userId: userId,
+			amount: amount,
+			category: selectedCategory,
+			currency: "dollar",
+			description: description,
 		};
-		setLoading(true);
-		const res = await fetch("http://localhost:3333/expenses", requestOptions);
-		if (res.ok) {
-			const data = await res.json();
-		} else {
-			console.error("error");
-		}
+
+		const data = await ApiCall.addExpense(expense);
 		setLoading(false);
 		handleClose();
 	};

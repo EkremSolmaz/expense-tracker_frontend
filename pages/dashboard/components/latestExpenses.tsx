@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../../styles/latestExpenses.module.scss";
 import { capitalizeFirstLetter } from "../../helpers/methods";
+import { Expense } from "../../helpers/interfaces";
 
 const iconMap: { [key: string]: string } = {
 	house: "/images/icons8-house-96.png",
@@ -10,7 +11,7 @@ const iconMap: { [key: string]: string } = {
 	default: "/images/icons8-question-mark-96.png",
 };
 
-export default function LatestExpensesComponent({ expenses }: any) {
+export default function LatestExpensesComponent({ expenses }: { expenses: Expense[] }) {
 	const [latestExpenses, setlatestExpenses] = useState(expenses.slice(0, 4));
 
 	useEffect(() => {
@@ -39,10 +40,10 @@ export default function LatestExpensesComponent({ expenses }: any) {
 	);
 }
 
-function getExpenseTemplate(expense: any) {
+function getExpenseTemplate(expense: Expense) {
 	const iconSrc = expense.category in iconMap ? iconMap[expense.category] : iconMap.default;
 	return (
-		<div className={styles.expense}>
+		<div key={expense._id} className={styles.expense}>
 			<div className={styles.icon}>
 				<Image src={iconSrc} alt="" width={40} height={40}></Image>
 			</div>
