@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../../styles/spendingThisMonth.module.scss";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { capitalizeFirstLetter } from "../../helpers/methods";
+import { capitalizeFirstLetter } from "../../../helpers/methods";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

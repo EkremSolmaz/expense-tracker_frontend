@@ -20,8 +20,8 @@ import Dialog from "@mui/material/Dialog";
 import Image from "next/image";
 
 import styles from "../../styles/addExpenseModal.module.scss";
-import { Expense } from "../helpers/interfaces";
-import ApiCall from "../helpers/api_call";
+import { Expense } from "../../helpers/interfaces";
+import ApiCall from "../../helpers/api_call";
 
 const categories: { [key: string]: string } = {
 	house: "/images/icons8-house-96.png",

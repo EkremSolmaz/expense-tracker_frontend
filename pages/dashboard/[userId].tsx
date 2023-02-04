@@ -5,8 +5,8 @@ import YearReportComponent from "./components/yearReport";
 import styles from "../../styles/[userId].module.scss";
 import AddExpenseModal from "../shared/addExpenseModal";
 import { useEffect, useRef, useState } from "react";
-import { Expense, User } from "../helpers/interfaces";
-import ApiCall from "../helpers/api_call";
+import { Expense, User } from "../../helpers/interfaces";
+import { ApiCall } from "../../helpers/api_call";
 
 export default function UserIdPage({ user }: any) {
 	const [totalExpense, setTotalExpense] = useState(0);

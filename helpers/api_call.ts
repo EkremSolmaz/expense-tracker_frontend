@@ -3,7 +3,6 @@ import { Expense, User } from "./interfaces";
 
 const baseUrl = process.env.API_BASE_URL || 'http://ec2-35-153-231-12.compute-1.amazonaws.com';
 const getDataFromApi = async (url: string, requestOptions?: object): Promise<any> => {
-    console.log(url);
     const res = await fetch(url, requestOptions);
     if (res.ok) {
         const data = await res.json();
@@ -14,7 +13,7 @@ const getDataFromApi = async (url: string, requestOptions?: object): Promise<any
     }
 };
 
-const ApiCall = {
+export const ApiCall = {
 
     getUsers: async (): Promise<User[]> => {
         const url = baseUrl + '/users';
@@ -54,5 +53,3 @@ const ApiCall = {
         return data;
     }
 }
-
-export default ApiCall;

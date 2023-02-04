@@ -3,12 +3,11 @@ import TextField from "@mui/material/TextField";
 import Router from "next/router";
 import { useState } from "react";
 import styles from "../styles/login.module.scss";
-import ApiCall from "./helpers/api_call";
-import { User } from "./helpers/interfaces";
+import { ApiCall } from "../helpers/api_call";
+import { User } from "../helpers/interfaces";
 
 async function getUser(username: string) {
 	const data = await ApiCall.getUsers();
-	console.log(data);
 	const user = data.find((user: User) => user.name === username);
 	return user;
 }

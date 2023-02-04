@@ -92,6 +92,5 @@ function prepareChartData(expenses: any[]) {
 		}
 	});
 
-	console.log(data);
 	return data;
 }

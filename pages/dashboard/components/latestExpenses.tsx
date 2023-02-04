@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../../styles/latestExpenses.module.scss";
-import { capitalizeFirstLetter } from "../../helpers/methods";
-import { Expense } from "../../helpers/interfaces";
+import { capitalizeFirstLetter } from "../../../helpers/methods";
+import { Expense } from "../../../helpers/interfaces";
 
 const iconMap: { [key: string]: string } = {
 	house: "/images/icons8-house-96.png",
