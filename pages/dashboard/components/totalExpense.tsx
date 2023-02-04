@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../../styles/totalExpense.module.scss";
 
 export default function TotalExpenseComponent({ totalAmount }: { totalAmount: number }) {
-	const parts = totalAmount.toFixed(2).split(".");
-	const amountWhole = parts[0];
-	const amountFloat = parts[1];
+	const [amountWhole, setAmountWhole] = useState("0");
+	const [amountFloat, setAmountFloat] = useState("0");
+	useEffect(() => {
+		const parts = totalAmount.toFixed(2).split(".");
+		setAmountWhole(parts[0]);
+		setAmountFloat(parts[1]);
+	}, [totalAmount]);
 	return (
 		<>
 			<div className={styles.container}>

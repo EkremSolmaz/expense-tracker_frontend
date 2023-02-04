@@ -12,15 +12,12 @@ const iconMap: { [key: string]: string } = {
 };
 
 export default function LatestExpensesComponent({ expenses }: { expenses: Expense[] }) {
-	const [latestExpenses, setlatestExpenses] = useState(expenses.slice(0, 4));
+	const [latestExpenses, setLatestExpenses] = useState<Expense[]>([]);
 
 	useEffect(() => {
-		setlatestExpenses(expenses.slice(0, 4));
+		setLatestExpenses(expenses.slice(0, 4));
 	}, [expenses]);
 
-	latestExpenses.map((expense: any) => {
-		expense.dateStr = new Date(expense.date).toLocaleDateString();
-	});
 	return (
 		<>
 			<div className={styles.container}>

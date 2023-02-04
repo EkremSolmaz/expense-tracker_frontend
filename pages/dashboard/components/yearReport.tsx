@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -29,7 +29,23 @@ const monthNames = [
 ];
 
 export default function YearReportComponent({ expenses }: any) {
-	const data = prepareChartData(expenses);
+	const [chartData, setChartData] = useState<{ labels: string[]; datasets: any[] }>({
+		labels: [],
+		datasets: [],
+	});
+	useEffect(() => {
+		const data = prepareChartData(expenses);
+		setChartData({
+			labels: Object.keys(data),
+			datasets: [
+				{
+					data: Object.values(data),
+					backgroundColor: "#023047",
+					borderRadius: 5,
+				},
+			],
+		});
+	}, [expenses]);
 	const options = {
 		responsive: true,
 		maintainAspectRatio: false,
@@ -56,16 +72,6 @@ export default function YearReportComponent({ expenses }: any) {
 				},
 			},
 		},
-	};
-	const chartData = {
-		labels: Object.keys(data),
-		datasets: [
-			{
-				data: Object.values(data),
-				backgroundColor: "#023047",
-				borderRadius: 5,
-			},
-		],
 	};
 	return (
 		<>

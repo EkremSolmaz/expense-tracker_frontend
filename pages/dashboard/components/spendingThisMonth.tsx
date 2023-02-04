@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../../../styles/spendingThisMonth.module.scss";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
@@ -13,27 +13,36 @@ const colorPalette: { [key: string]: string } = {
 };
 
 export default function SpendingThisMonthComponent({ expenses }: any) {
-	const data = prepareChartData(expenses);
-	let totalAmount: number = 0;
-	Object.keys(data).forEach((key) => (totalAmount += data[key]));
-	const parts = totalAmount.toFixed(2).split(".");
-	const amountWhole = parts[0];
-	const amountFloat = parts[1];
+	const [chartData, setChartData] = useState<{ labels: string[]; datasets: any[] }>({
+		labels: [],
+		datasets: [],
+	});
+	const [amountWhole, setAmountWhole] = useState("0");
+	const [amountFloat, setAmountFloat] = useState("0");
+	useEffect(() => {
+		const data = prepareChartData(expenses);
+		let totalAmount: number = 0;
+		Object.keys(data).forEach((key) => (totalAmount += data[key]));
+		const parts = totalAmount.toFixed(2).split(".");
+		setAmountWhole(parts[0]);
+		setAmountFloat(parts[1]);
 
-	const chartData: any = {
-		labels: Object.keys(data).map((x) => {
-			return capitalizeFirstLetter(x);
-		}),
-		datasets: [
-			{
-				data: Object.values(data),
-				label: Object.values(data),
-				backgroundColor: Object.keys(data).map((key) =>
-					key in colorPalette ? colorPalette[key] : getRandomColor()
-				),
-			},
-		],
-	};
+		setChartData({
+			labels: Object.keys(data).map((x) => {
+				return capitalizeFirstLetter(x);
+			}),
+			datasets: [
+				{
+					data: Object.values(data),
+					label: Object.values(data),
+					backgroundColor: Object.keys(data).map((key) =>
+						key in colorPalette ? colorPalette[key] : getRandomColor()
+					),
+				},
+			],
+		});
+	}, [expenses]);
+
 	const options: any = {
 		responsive: true,
 		plugins: {

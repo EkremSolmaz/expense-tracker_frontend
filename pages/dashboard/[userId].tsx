@@ -14,7 +14,7 @@ export default function UserIdPage({ user }: any) {
 
 	useEffect(() => {
 		refreshExpenses(user._id);
-	}, []);
+	}, [user._id]);
 
 	async function refreshExpenses(userId: string) {
 		const new_expenses = await getExpensesOfUser(userId);
@@ -39,6 +39,7 @@ export default function UserIdPage({ user }: any) {
 }
 
 export async function getStaticPaths() {
+	console.log("getStaticPaths");
 	// Return a list of possible value for id
 	const users: User[] = await ApiCall.getUsers();
 	return {
@@ -54,6 +55,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
+	console.log("getStaticProps");
+
 	const user = await ApiCall.getUser(params.userId);
 
 	return {
@@ -62,8 +65,13 @@ export async function getStaticProps({ params }: any) {
 		},
 	};
 }
-async function getExpensesOfUser(_id: any) {
+async function getExpensesOfUser(_id: any): Promise<Expense[]> {
 	const expenses = await ApiCall.getExpensesOfUser(_id);
+	expenses.map((expense: Expense) => {
+		if (expense.date) {
+			expense.dateStr = new Date(expense.date).toLocaleDateString();
+		}
+	});
 	return expenses;
 }
 

@@ -6,13 +6,13 @@ import styles from "../styles/login.module.scss";
 import { ApiCall } from "../helpers/api_call";
 import { User } from "../helpers/interfaces";
 
-async function getUser(username: string) {
-	const data = await ApiCall.getUsers();
-	const user = data.find((user: User) => user.name === username);
-	return user;
+async function createUser(username: string) {
+	const user: User = { name: username };
+	const data = await ApiCall.addUser(user);
+	return data;
 }
 
-export default function LoginPage() {
+export default function RegisterPage() {
 	const [username, setUsername] = useState("");
 	const [loading, setLoading] = useState(false);
 
@@ -22,25 +22,24 @@ export default function LoginPage() {
 
 		setLoading(true);
 
-		const user = await getUser(username);
+		const user = await createUser(username);
 
 		if (user) {
-			Router.push(`/dashboard/${user._id}`);
+			alert("User created successfully.");
+			Router.push(`/login`);
 		} else {
-			alert("Could not found user.");
+			alert("Could not create user.");
 		}
 		setLoading(false);
 	};
-	const registerClick = (e: any) => {
-		e.preventDefault();
-
-		Router.push(`/register`);
+	const goBackClick = async (e: any) => {
+		Router.push(`/login`);
 	};
 	return (
 		<div className={styles.container}>
 			<h1>Expense Tracker</h1>
 			<div className={styles.loginDialog}>
-				<h2>Login</h2>
+				<h2>Register</h2>
 				<form onSubmit={handleSubmit}>
 					<TextField
 						id="standard-basic"
@@ -49,9 +48,9 @@ export default function LoginPage() {
 						value={username}
 						onChange={(e) => setUsername(e.target.value)}
 					/>
-					{loading ? <CircularProgress /> : <button type="submit">Login</button>}
+					{loading ? <CircularProgress /> : <button type="submit">Create User</button>}
 				</form>
-				<button onClick={registerClick}>Register</button>
+				<button onClick={goBackClick}>Go back to Login.</button>
 			</div>
 		</div>
 	);

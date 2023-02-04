@@ -35,7 +35,20 @@ export const ApiCall = {
         const data = await getDataFromApi(url);
         return data.data;
     },
-    addExpense: async (expense: Expense): Promise<void> => {
+    addUser: async (user: User): Promise<boolean> => {
+        const url = baseUrl + '/users';
+        const requestOptions = {
+            method: 'POST',
+			headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: user.name,
+            })
+        };
+        const data = await getDataFromApi(url, requestOptions);
+        return data !== undefined;
+
+    },
+    addExpense: async (expense: Expense): Promise<boolean> => {
         const url = baseUrl + '/expenses';
         const requestOptions = {
 			method: "POST",
@@ -49,7 +62,6 @@ export const ApiCall = {
 			}),
 		};
         const data = await getDataFromApi(url, requestOptions);
-
-        return data;
+        return data !== undefined;
     }
 }
