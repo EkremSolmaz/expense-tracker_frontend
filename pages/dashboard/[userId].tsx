@@ -39,7 +39,6 @@ export default function UserIdPage({ user }: any) {
 }
 
 export async function getStaticPaths() {
-	console.log("getStaticPaths");
 	// Return a list of possible value for id
 	const users: User[] = await ApiCall.getUsers();
 	return {
@@ -55,8 +54,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: any) {
-	console.log("getStaticProps");
-
 	const user = await ApiCall.getUser(params.userId);
 
 	return {
