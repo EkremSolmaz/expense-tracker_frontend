@@ -3,6 +3,7 @@ import styles from "../../../styles/spendingThisMonth.module.scss";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { capitalizeFirstLetter } from "../../../helpers/methods";
+import { Expense } from "../../../helpers/interfaces";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -86,13 +87,17 @@ export default function SpendingThisMonthComponent({ expenses }: any) {
 	);
 }
 
-function prepareChartData(expenses: any[]) {
+function prepareChartData(expenses: Expense[]) {
 	const data: { [key: string]: number } = {};
+	const thisMonth = new Date().getMonth();
 	expenses.forEach((e: any) => {
-		if (!(e.category in data)) {
-			data[e.category] = 0;
+		console.log(e);
+		if (e.date.getMonth() === thisMonth) {
+			if (!(e.category in data)) {
+				data[e.category] = 0;
+			}
+			data[e.category] += e.amount;
 		}
-		data[e.category] += e.amount;
 	});
 	return data;
 }

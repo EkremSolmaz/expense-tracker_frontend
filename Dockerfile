@@ -1,10 +1,10 @@
 FROM node:alpine
 
 #copy source 
-COPY . /app
+COPY . .
 
 # Install deps 
-RUN cd /app && yarn
+RUN yarn
 
 # Build 
 RUN yarn build

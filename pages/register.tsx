@@ -22,15 +22,19 @@ export default function RegisterPage() {
 
 		setLoading(true);
 
-		const user = await createUser(username);
-
-		if (user) {
-			alert("User created successfully.");
-			Router.push(`/login`);
-		} else {
-			alert("Could not create user.");
+		try {
+			const user = await createUser(username);
+			if (user) {
+				alert("User created successfully.");
+				Router.push(`/login`);
+			} else {
+				alert("Could not create user.");
+				setLoading(false);
+			}
+		} catch (err) {
+			alert(err);
+			setLoading(false);
 		}
-		setLoading(false);
 	};
 	const goBackClick = async (e: any) => {
 		Router.push(`/login`);
@@ -50,7 +54,7 @@ export default function RegisterPage() {
 					/>
 					{loading ? <CircularProgress /> : <button type="submit">Create User</button>}
 				</form>
-				<button onClick={goBackClick}>Go back to Login.</button>
+				<button onClick={goBackClick}>Go back to Login</button>
 			</div>
 		</div>
 	);

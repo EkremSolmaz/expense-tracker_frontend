@@ -29,7 +29,7 @@ export default function UserIdPage({ user }: any) {
 				<div className={styles.content}>
 					<TotalExpenseComponent totalAmount={totalExpense} />
 					<YearReportComponent expenses={expenses} />
-					<LatestExpensesComponent expenses={expenses} />
+					<LatestExpensesComponent expenses={expenses} userId={user._id} />
 					<SpendingThisMonthComponent expenses={expenses} />
 				</div>
 				<AddExpenseModal userId={user._id} refreshCallback={refreshExpenses} />
@@ -39,17 +39,9 @@ export default function UserIdPage({ user }: any) {
 }
 
 export async function getStaticPaths() {
-	// Return a list of possible value for id
-	const users: User[] = await ApiCall.getUsers();
 	return {
-		paths: users.map((u: User) => {
-			return {
-				params: {
-					userId: u._id,
-				},
-			};
-		}),
-		fallback: false,
+		paths: [],
+		fallback: "blocking",
 	};
 }
 
@@ -66,7 +58,7 @@ async function getExpensesOfUser(_id: any): Promise<Expense[]> {
 	const expenses = await ApiCall.getExpensesOfUser(_id);
 	expenses.map((expense: Expense) => {
 		if (expense.date) {
-			expense.dateStr = new Date(expense.date).toLocaleDateString();
+			expense.dateStr = expense.date.toLocaleDateString();
 		}
 	});
 	return expenses;

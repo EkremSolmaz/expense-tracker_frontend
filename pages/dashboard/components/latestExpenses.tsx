@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "../../../styles/latestExpenses.module.scss";
-import { capitalizeFirstLetter } from "../../../helpers/methods";
+import { capitalizeFirstLetter, getCatogoryIcon } from "../../../helpers/methods";
 import { Expense } from "../../../helpers/interfaces";
+import { Button } from "@mui/material";
+import Router from "next/router";
 
 const iconMap: { [key: string]: string } = {
 	house: "/images/icons8-house-96.png",
@@ -11,12 +13,22 @@ const iconMap: { [key: string]: string } = {
 	default: "/images/icons8-question-mark-96.png",
 };
 
-export default function LatestExpensesComponent({ expenses }: { expenses: Expense[] }) {
+export default function LatestExpensesComponent({
+	expenses,
+	userId,
+}: {
+	expenses: Expense[];
+	userId: string;
+}) {
 	const [latestExpenses, setLatestExpenses] = useState<Expense[]>([]);
 
 	useEffect(() => {
 		setLatestExpenses(expenses.slice(0, 4));
 	}, [expenses]);
+
+	const openExpenseTable = () => {
+		Router.push(`/table/${userId}`);
+	};
 
 	return (
 		<>
@@ -30,7 +42,9 @@ export default function LatestExpensesComponent({ expenses }: { expenses: Expens
 					})}
 				</div>
 				<div className={styles.see_all}>
-					<a href="">See All Expenses</a>
+					<Button className={styles.see_all_button} onClick={openExpenseTable}>
+						See All Expenses
+					</Button>
 				</div>
 			</div>
 		</>
@@ -38,7 +52,7 @@ export default function LatestExpensesComponent({ expenses }: { expenses: Expens
 }
 
 function getExpenseTemplate(expense: Expense) {
-	const iconSrc = expense.category in iconMap ? iconMap[expense.category] : iconMap.default;
+	const iconSrc = getCatogoryIcon(expense.category);
 	return (
 		<div key={expense._id} className={styles.expense}>
 			<div className={styles.icon}>

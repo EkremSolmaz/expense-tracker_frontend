@@ -28,8 +28,8 @@ export default function LoginPage() {
 			Router.push(`/dashboard/${user._id}`);
 		} else {
 			alert("Could not found user.");
+			setLoading(false);
 		}
-		setLoading(false);
 	};
 	const registerClick = (e: any) => {
 		e.preventDefault();

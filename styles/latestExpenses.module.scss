@@ -82,22 +82,15 @@
         width: 100%;
         text-align: center;
 
-        a {
+        &_button {
             text-decoration: none !important;
             font-weight: 900;
             font-family: inter;
             color: $button-color;
 
-            &:visited {
-                text-decoration: none;
-                color: $button-color;
-
-            }
-
             &:hover {
                 color: $button-hover-color;
             }
         }
-
     }
 }

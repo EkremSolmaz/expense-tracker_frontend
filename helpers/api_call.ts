@@ -1,6 +1,7 @@
 import { ApiError } from "next/dist/server/api-utils";
 import { Expense, User } from "./interfaces";
 
+// const baseUrl = process.env.API_BASE_URL || 'http://localhost' || 'http://ec2-35-153-231-12.compute-1.amazonaws.com';
 const baseUrl = process.env.API_BASE_URL || 'http://ec2-35-153-231-12.compute-1.amazonaws.com';
 const getDataFromApi = async (url: string, requestOptions?: object): Promise<any> => {
     const res = await fetch(url, requestOptions);
@@ -8,8 +9,11 @@ const getDataFromApi = async (url: string, requestOptions?: object): Promise<any
         const data = await res.json();
         return data;
     } else {
-        throw new ApiError(res.status, `Could not fetch data from ${url}. ${res.status}: ${res.statusText}`);
-
+        const resBody = await res.json();
+        if(resBody.error){
+            throw new ApiError(res.status, resBody.error);
+        }
+        throw new ApiError(res.status, `API returned error or timed out -> ${url} ${res.status}: ${res.statusText}`);
     }
 };
 
@@ -33,6 +37,9 @@ export const ApiCall = {
     getExpensesOfUser: async (userId: string): Promise<Expense[]> => {
         const url = baseUrl + '/users/' + userId + '/expenses';
         const data = await getDataFromApi(url);
+        data.data.forEach((expense: any) => {
+            expense.date = new Date(expense.date);
+        });
         return data.data;
     },
     addUser: async (user: User): Promise<boolean> => {

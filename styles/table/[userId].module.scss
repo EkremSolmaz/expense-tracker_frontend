@@ -1,0 +1,63 @@
+@import "../shared.scss";
+
+.container {
+
+    padding: 18px;
+
+    .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .title {
+            display: block;
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+        }
+    }
+
+
+    .tableContainer {
+        max-height: calc(100vh - 180px);
+
+        .tableHeader {
+
+            &>th {
+                font-weight: bold;
+            }
+        }
+    }
+
+
+    .expense_row {
+        max-width: 25%;
+
+
+        &>td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .category_cell {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        &_content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            span {
+                text-transform: capitalize;
+                font-weight: bold;
+            }
+        }
+    }
+}
